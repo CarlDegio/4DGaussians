@@ -50,6 +50,9 @@ conda activate Gaussians4D
 pip install -r requirements.txt
 pip install -e submodules/depth-diff-gaussian-rasterization
 pip install -e submodules/simple-knn
+
+conda install -c nvidia cuda-toolkit
+conda install -c conda-forge colmap
 ```
 
 In our environment, we use pytorch=1.13.1+cu116.
@@ -112,6 +115,19 @@ After that, you can use the  `multipleviewprogress.sh` we provided to generate r
 ```bash
 bash multipleviewprogress.sh (youe dataset name)
 ```
+Attention! Small dataset may lead to LLFF error like this:
+```
+Don't need to run COLMAP
+Post-colmap
+Cameras 5
+Images # 6
+ERROR: the correct camera poses for current points cannot be accessed
+Done with imgs2poses
+```
+Fix this by https://github.com/Fyusion/LLFF/pull/60. 
+But problem, it should use all camera to generate pose_bound_multipleview.npy
+
+
 You need to ensure that the data folder is organized as follows after running multipleviewprogress.sh:
 ```
 ├── data
